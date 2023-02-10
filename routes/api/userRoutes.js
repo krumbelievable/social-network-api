@@ -1,36 +1,26 @@
 const router = require('express').Router();
-const {  // here are all of the user and friend routes that we will be calling in our controller.
-  getUsers,
-  getSingleUser,
-  updateUser,
-  createUser,
-  deleteUser,
-  addToFriendList,
-  removeFromFriendList,
+// all of the routes for the api that a user can access
+const {
+	getUsers,
+	getSingleUser,
+	updateUser,
+	createUser,
+	deleteUser,
+	addToFriendList,
+	removeFromFriendList,
 } = require('../../controllers/userController');
 
-// /users
+// route to users
 
-router
-.route('/')
-.get(getUsers)
-.post(createUser);
+router.route('/').get(getUsers).post(createUser);
 
-// /api/users/:userId
-router
-.route('/:userId')
-.get(getSingleUser)
-.delete(deleteUser)
-.put(updateUser);
+// route to specific user
+router.route('/:userId').get(getSingleUser).delete(deleteUser).put(updateUser);
 
-// /api/users/:userId/friends/friendId
-router
-.route('/:userId/friends/:friendId')
-.post(addToFriendList);
+// route to add a friend
+router.route('/:userId/friends/:friendId').post(addToFriendList);
 
-// /api/users/:user/friends/friendId
-router
-.route('/:userId/friends/:friendId')
-.delete(removeFromFriendList);
+// route to remove a friend
+router.route('/:userId/friends/:friendId').delete(removeFromFriendList);
 
 module.exports = router;

@@ -1,33 +1,34 @@
 const router = require('express').Router();
-const {  // here are all of the thought and reaction routes that we will be calling in our controller.
-  getThoughts,
-  getSingleThought,
-  createThought,
-  updateThought,
-  deleteThought,
-  addReaction,
-  removeReaction,
+
+// routes to be called by the controller
+
+const {
+	getThoughts,
+	getSingleThought,
+	createThought,
+	updateThought,
+	deleteThought,
+	addReaction,
+	removeReaction,
 } = require('../../controllers/thoughtController.js');
 
-// /api/thoughts
-router.route('/')
-.get(getThoughts)
-.post(createThought);
+// brings us to thoughts api
 
-// /api/thoughts/:thoughtId
-router
-  .route('/:thoughtId')
-  .get(getSingleThought)
-  .put(updateThought)
-  .delete(deleteThought);
+router.route('/').get(getThoughts).post(createThought);
 
-// /api/thoughts/:thoughtId/reactions
-router
-  .route('/:thoughtId/reactions')
-  .post(addReaction) 
+// route to specific thought
 
-// /api/thoughts/:thoughtId/reactions/reactionId
 router
-.route('/:thoughtId/reactions/:reactionId')
-.delete(removeReaction)
+	.route('/:thoughtId')
+	.get(getSingleThought)
+	.put(updateThought)
+	.delete(deleteThought);
+
+// route to reactions to a thought
+
+router.route('/:thoughtId/reactions').post(addReaction);
+
+// route to specific reaction
+
+router.route('/:thoughtId/reactions/:reactionId').delete(removeReaction);
 module.exports = router;
